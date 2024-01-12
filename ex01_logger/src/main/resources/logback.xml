@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+	<!-- console 출력 패턴 -->
+	<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender"> <!-- 무조건 -->
+		<encoder>
+			<pattern>
+				%d{yyyy-MM-dd} [%-5level] ==== [%thread] %logger{36} -%msg%n
+			</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- log 파일로 저장 -->
+	<appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>src/main/resources/logs/logger_test.log</file>
+		<encoder>
+			<pattern>
+				%d{yyyy-MM-dd HH:mm:ss} [%thread] [%-5level] %logger{36} -%msg%n
+			</pattern>
+		</encoder>
+		
+		<rollingPollicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>
+				src/main/resources/logs/logger-%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPollicy>
+	</appender>
+	
+	<!-- com.study에 설정 -->
+	<logger name="com.study" level="info" additivity="false">
+		<appender-ref ref="consoleAppender" />
+		<appender-ref ref="fileAppender" />
+	</logger>
+	
+	<!-- root에 설정 -->
+	<root level = "info">
+		<appender-ref ref="consoleAppender" />
+	</root>
+</configuration>
